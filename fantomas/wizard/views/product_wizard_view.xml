@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id='create_product_template_form' model='ir.ui.view'>
+        <field name='name'>create product template wizard form view</field>
+        <field name='model'>create.product.template.wizard</field>
+        <field name='arch' type='xml'>
+            <form string="Product creating">
+                <field name='show_step_one' attrs="{'invisible': True}" />
+                <field name='show_step_two' attrs="{'invisible': True}" />
+
+                <sheet>
+                    <group string="Step 1" attrs="{'invisible':[('show_step_one', '=', False)]}">
+                        <label for="name" string="Product name:" style="font-size: 15px;"/>
+                        <field name="name" attrs="{'readonly': True}" style="font-size: 25px;"/>
+                        <group>
+                            <field name="sale_ok"/>
+                            <field name="purchase_ok"/>
+                        </group>
+                        <group>
+                            <field name="type"/>
+                            <field name="categ_id"/>
+                            <field name="default_code"/>
+                            <field name="manufacturer_id"/>
+                            <field name="model_id"/>
+                        </group>
+                    </group>
+                    <group string="Step 2" attrs="{'invisible':[('show_step_two', '=', False)]}">
+                        <field name="image_medium"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name='accept_step_one' string='Accept step one' class='btn-primary' type='object' attrs="{'invisible':[('show_step_one', '=', False)]}"/>
+                    <button name='back' string='Back' class='btn-primary' type='object' attrs="{'invisible':[('show_step_two', '=', False)]}"/>
+                    <button name='create_product' string='Create product' class='btn-primary' type='object' attrs="{'invisible':[('show_step_two', '=', False)]}"/>
+                    <button string='Cancel' class='btn-default' special='cancel'/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="create_product_template_action" name="Create product" res_model="create.product.template.wizard"
+        view_mode="form" target="new" />
+    <menuitem id="menu_create_product_template" parent="sale.product_menu_catalog"
+        action="create_product_template_action" sequence="1" name="Quick Create Product" />
+</odoo>
